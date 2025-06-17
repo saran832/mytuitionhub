@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Tuition Hub - Vadalur</title>
   <script type="module">
-    // Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -13,7 +12,7 @@
       apiKey: "AIzaSyC9tcljmr3GK3T98YUDxbVJZnaKluomXYs",
       authDomain: "my-tuition-hub.firebaseapp.com",
       projectId: "my-tuition-hub",
-      storageBucket: "my-tuition-hub.firebasestorage.app",
+      storageBucket: "my-tuition-hub.appspot.com",
       messagingSenderId: "565594366098",
       appId: "1:565594366098:web:d6f1f8e70f1588d7bd064b",
       measurementId: "G-27Z4BRWYMR"
@@ -22,7 +21,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Form submission
     window.submitStudentForm = async function() {
       const name = document.getElementById("studentName").value;
       const grade = document.getElementById("studentGrade").value;
@@ -42,11 +40,14 @@
     }
   </script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: #e6fff5;
+      background: #f2fdfb;
       color: #00332e;
     }
     header {
@@ -54,103 +55,122 @@
       color: #00332e;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     header img {
-      max-height: 100px;
-      margin-bottom: 10px;
+      max-height: 90px;
+      margin-bottom: 0.5rem;
+    }
+    header h1 {
+      margin: 0.5rem 0 0;
+      font-size: 2rem;
     }
     section {
       padding: 1.5rem;
     }
-    .courses, .contact, .about, .form-section {
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
       background: white;
-      margin: 1rem auto;
-      max-width: 600px;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     h2 {
       color: #00332e;
+      margin-top: 0;
     }
     .button {
       background: #009f6b;
       color: white;
-      padding: 10px 15px;
+      padding: 10px 20px;
       text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    a.button:hover, button.button:hover {
+    .button:hover {
       background: #007a54;
     }
     input, select {
       width: 100%;
       padding: 10px;
-      margin: 5px 0;
+      margin-top: 8px;
+      margin-bottom: 16px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
+    }
+    form label {
+      font-weight: bold;
+    }
+    ul {
+      padding-left: 1.2rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/logo.png" alt="My Tuition Hub Logo" width="120" />
+    <img src="logo.png" alt="My Tuition Hub Logo" />
     <h1>My Tuition Hub</h1>
     <p>Vadalur Based Online Tuition Classes</p>
   </header>
 
-  <section class="courses">
-    <h2>Courses Offered</h2>
-    <ul>
-      <li>3rd to 9th Standard – All Subjects</li>
-      <li>10th to 12th Standard – Science/Commerce</li>
-      <li>Basic Computer Classes</li>
-    </ul>
-    <p><strong>Timing:</strong> 6:00 PM to 8:00 PM</p>
-    <p><strong>Fees:</strong> ₹300/month</p>
-  </section>
+  <div class="container">
+    <section class="card">
+      <h2>📚 Courses Offered</h2>
+      <ul>
+        <li>3rd to 9th Standard – All Subjects</li>
+        <li>10th to 12th Standard – Science/Commerce</li>
+        <li>Basic Computer Classes</li>
+      </ul>
+      <p><strong>Timing:</strong> 6:00 PM to 8:00 PM</p>
+      <p><strong>Fees:</strong> ₹300/month</p>
+    </section>
 
-  <section class="about">
-    <h2>About Us</h2>
-    <p>Welcome! I'm an MCA graduate, offering personalized tuition classes for students in Vadalur from class 3 to 12, including basic computer training. Learn comfortably from home with online sessions.</p>
-  </section>
+    <section class="card">
+      <h2>👨‍🏫 About Us</h2>
+      <p>Welcome! I'm an MCA graduate, offering personalized tuition classes for students in Vadalur from class 3 to 12, including basic computer training. Learn comfortably from home with online sessions.</p>
+    </section>
 
-  <section class="form-section">
-    <h2>Add Student Details</h2>
-    <form id="studentForm" onsubmit="event.preventDefault(); submitStudentForm();">
-      <label for="studentName">Student Name:</label>
-      <input type="text" id="studentName" required>
+    <section class="card">
+      <h2>➕ Add Student Details</h2>
+      <form id="studentForm" onsubmit="event.preventDefault(); submitStudentForm();">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" required>
 
-      <label for="studentGrade">Class/Grade:</label>
-      <select id="studentGrade" required>
-        <option value="">Select Grade</option>
-        <option value="3">3rd</option>
-        <option value="4">4th</option>
-        <option value="5">5th</option>
-        <option value="6">6th</option>
-        <option value="7">7th</option>
-        <option value="8">8th</option>
-        <option value="9">9th</option>
-        <option value="10">10th</option>
-        <option value="11">11th</option>
-        <option value="12">12th</option>
-      </select>
+        <label for="studentGrade">Class/Grade:</label>
+        <select id="studentGrade" required>
+          <option value="">Select Grade</option>
+          <option value="3">3rd</option>
+          <option value="4">4th</option>
+          <option value="5">5th</option>
+          <option value="6">6th</option>
+          <option value="7">7th</option>
+          <option value="8">8th</option>
+          <option value="9">9th</option>
+          <option value="10">10th</option>
+          <option value="11">11th</option>
+          <option value="12">12th</option>
+        </select>
 
-      <label for="studentFees">Fees Paid:</label>
-      <input type="number" id="studentFees" required>
+        <label for="studentFees">Fees Paid:</label>
+        <input type="number" id="studentFees" required>
 
-      <button type="submit" class="button">Add Student</button>
-    </form>
-  </section>
+        <button type="submit" class="button">Add Student</button>
+      </form>
+    </section>
 
-  <section class="contact">
-    <h2>Contact</h2>
-    <p>📱 <a href="https://wa.me/919444852472" class="button">Join via WhatsApp</a></p>
-    <p>📧 Email: mytuitionhub@gmail.com (optional)</p>
-  </section>
+    <section class="card">
+      <h2>📞 Contact</h2>
+      <p>📱 <a href="https://wa.me/919444852472" class="button">Join via WhatsApp</a></p>
+      <p>📧 Email: mytuitionhub@gmail.com</p>
+    </section>
+  </div>
 </body>
 </html>
+
 
