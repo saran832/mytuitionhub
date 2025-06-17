@@ -4,172 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Tuition Hub - Vadalur</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyC9tcljmr3GK3T98YUDxbVJZnaKluomXYs",
-      authDomain: "my-tuition-hub.firebaseapp.com",
-      projectId: "my-tuition-hub",
-      storageBucket: "my-tuition-hub.appspot.com",
-      messagingSenderId: "565594366098",
-      appId: "1:565594366098:web:d6f1f8e70f1588d7bd064b",
-      measurementId: "G-27Z4BRWYMR"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.submitStudentForm = async function() {
-      const name = document.getElementById("studentName").value;
-      const grade = document.getElementById("studentGrade").value;
-      const fees = document.getElementById("studentFees").value;
-
-      try {
-        await addDoc(collection(db, "students"), {
-          name,
-          grade,
-          fees
-        });
-        alert("Student added successfully!");
-        document.getElementById("studentForm").reset();
-      } catch (e) {
-        alert("Error adding student: " + e);
-      }
-    }
-  </script>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --color-bg: #f5faff;
+      --color-primary: #0d3b66;
+      --color-accent: #00a896;
+      --color-white: #ffffff;
+      --color-shadow: rgba(0, 0, 0, 0.1);
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f2fdfb;
-      color: #00332e;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-primary);
     }
     header {
-      background: white;
-      color: #00332e;
-      padding: 1rem;
+      background: var(--color-white);
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2rem 1rem;
+      box-shadow: 0 2px 8px var(--color-shadow);
     }
     header img {
-      max-height: 90px;
+      max-height: 80px;
+    }
+    h1 {
+      margin: 0.5rem 0 0.2rem;
+    }
+    .section {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: var(--color-white);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 12px var(--color-shadow);
+    }
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .course-card {
+      background: var(--color-primary);
+      color: white;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .course-title {
+      font-weight: 700;
+      font-size: 1.25rem;
       margin-bottom: 0.5rem;
     }
-    header h1 {
-      margin: 0.5rem 0 0;
-      font-size: 2rem;
+    .course-description {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
     }
-    section {
-      padding: 1.5rem;
+    .course-footer {
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
+    .course-footer span {
+      color: var(--color-accent);
     }
-    .card {
-      background: white;
-      margin-bottom: 1.5rem;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    h2 {
-      color: #00332e;
-      margin-top: 0;
-    }
-    .button {
-      background: #009f6b;
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .button:hover {
-      background: #007a54;
-    }
-    input, select {
+    form input, form select {
       width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 16px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
       border: 1px solid #ccc;
       border-radius: 6px;
     }
-    form label {
-      font-weight: bold;
+    .button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      background: var(--color-accent);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 10px;
     }
-    ul {
-      padding-left: 1.2rem;
+    .qr-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      z-index: 1001;
+    }
+    .qr-popup.active {
+      display: block;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="My Tuition Hub Logo" />
+    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/logo.png" alt="My Tuition Hub Logo" />
     <h1>My Tuition Hub</h1>
-    <p>Vadalur Based Online Tuition Classes</p>
+    <p>Vadalur Based Tuition Center</p>
   </header>
 
-  <div class="container">
-    <section class="card">
-      <h2>📚 Courses Offered</h2>
-      <ul>
-        <li>3rd to 9th Standard – All Subjects</li>
-        <li>10th to 12th Standard – Science/Commerce</li>
-        <li>Basic Computer Classes</li>
-      </ul>
-      <p><strong>Timing:</strong> 6:00 PM to 8:00 PM</p>
-      <p><strong>Fees:</strong> ₹300/month</p>
-    </section>
+  <section class="section">
+    <h2>Courses Offered</h2>
+    <div class="courses">
+      <div class="course-card">
+        <div class="course-title">Class 3 to 9</div>
+        <div class="course-description">All Subjects with Weekly Tests</div>
+        <div class="course-footer">Fees: <span>₹300/month</span></div>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Class 10 to 12</div>
+        <div class="course-description">Subjects: Computer Science, Biology, Maths</div>
+        <div class="course-footer">Fees: <span>₹600/month</span></div>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Basic Computer Class</div>
+        <div class="course-description">Typing, MS Office, Basics of Internet</div>
+        <div class="course-footer">Fees: <span>₹400/month</span></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="card">
-      <h2>👨‍🏫 About Us</h2>
-      <p>Welcome! I'm an MCA graduate, offering personalized tuition classes for students in Vadalur from class 3 to 12, including basic computer training. Learn comfortably from home with online sessions.</p>
-    </section>
+  <section class="section">
+    <h2>Student Registration</h2>
+    <form id="studentForm">
+      <input type="text" placeholder="Student Name" required>
+      <select required>
+        <option value="">Select Grade</option>
+        <option value="3-9">3rd to 9th</option>
+        <option value="10-12">10th to 12th</option>
+        <option value="basic">Basic Computer</option>
+      </select>
+      <input type="number" placeholder="Fees Paid ₹" required>
+      <div>
+        <button type="button" class="button" onclick="showQR()">Want to Pay</button>
+        <button type="submit" class="button">Paid</button>
+      </div>
+    </form>
+  </section>
 
-    <section class="card">
-      <h2>➕ Add Student Details</h2>
-      <form id="studentForm" onsubmit="event.preventDefault(); submitStudentForm();">
-        <label for="studentName">Student Name:</label>
-        <input type="text" id="studentName" required>
-
-        <label for="studentGrade">Class/Grade:</label>
-        <select id="studentGrade" required>
-          <option value="">Select Grade</option>
-          <option value="3">3rd</option>
-          <option value="4">4th</option>
-          <option value="5">5th</option>
-          <option value="6">6th</option>
-          <option value="7">7th</option>
-          <option value="8">8th</option>
-          <option value="9">9th</option>
-          <option value="10">10th</option>
-          <option value="11">11th</option>
-          <option value="12">12th</option>
-        </select>
-
-        <label for="studentFees">Fees Paid:</label>
-        <input type="number" id="studentFees" required>
-
-        <button type="submit" class="button">Add Student</button>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>📞 Contact</h2>
-      <p>📱 <a href="https://wa.me/919444852472" class="button">Join via WhatsApp</a></p>
-      <p>📧 Email: mytuitionhub@gmail.com</p>
-    </section>
+  <div class="qr-popup" id="qrPopup">
+    <h3>Scan to Pay</h3>
+    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/qr.png" alt="QR Code" width="200">
+    <br><br>
+    <button class="button" onclick="hideQR()">Close</button>
   </div>
+
+  <script>
+    function showQR() {
+      document.getElementById('qrPopup').classList.add('active');
+    }
+    function hideQR() {
+      document.getElementById('qrPopup').classList.remove('active');
+    }
+  </script>
 </body>
 </html>
 
