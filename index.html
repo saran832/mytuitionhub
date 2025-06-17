@@ -4,6 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Tuition Hub - Vadalur</title>
+  <script type="module">
+    // Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9tcljmr3GK3T98YUDxbVJZnaKluomXYs",
+      authDomain: "my-tuition-hub.firebaseapp.com",
+      projectId: "my-tuition-hub",
+      storageBucket: "my-tuition-hub.firebasestorage.app",
+      messagingSenderId: "565594366098",
+      appId: "1:565594366098:web:d6f1f8e70f1588d7bd064b",
+      measurementId: "G-27Z4BRWYMR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Form submission
+    window.submitStudentForm = async function() {
+      const name = document.getElementById("studentName").value;
+      const grade = document.getElementById("studentGrade").value;
+      const fees = document.getElementById("studentFees").value;
+
+      try {
+        await addDoc(collection(db, "students"), {
+          name,
+          grade,
+          fees
+        });
+        alert("Student added successfully!");
+        document.getElementById("studentForm").reset();
+      } catch (e) {
+        alert("Error adding student: " + e);
+      }
+    }
+  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,7 +63,7 @@
     section {
       padding: 1.5rem;
     }
-    .courses, .contact, .about {
+    .courses, .contact, .about, .form-section {
       background: white;
       margin: 1rem auto;
       max-width: 600px;
@@ -46,38 +83,21 @@
       display: inline-block;
       margin-top: 10px;
     }
-    a.button:hover {
+    a.button:hover, button.button:hover {
       background: #007a54;
     }
-
-        @media (max-width: 600px) {
-      header img {
-        max-height: 80px;
-      }
-      section {
-        padding: 1rem;
-      }
-      .courses, .contact, .about {
-        margin: 1rem 0.5rem;
-        padding: 1rem;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-      h2 {
-        font-size: 1.2rem;
-      }
-      .button {
-        width: 100%;
-        text-align: center;
-      }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-
   </style>
 </head>
 <body>
   <header>
-<img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/Professional%20Wordmark%20Tuition%20Center%20Logo.png" alt="My Tuition Hub Logo" width="120" />
+    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/logo.png" alt="My Tuition Hub Logo" width="120" />
     <h1>My Tuition Hub</h1>
     <p>Vadalur Based Online Tuition Classes</p>
   </header>
@@ -90,12 +110,40 @@
       <li>Basic Computer Classes</li>
     </ul>
     <p><strong>Timing:</strong> 6:00 PM to 8:00 PM</p>
-    <p><strong>Fees:</strong> ₹299/month</p>
+    <p><strong>Fees:</strong> ₹300/month</p>
   </section>
 
   <section class="about">
     <h2>About Us</h2>
     <p>Welcome! I'm an MCA graduate, offering personalized tuition classes for students in Vadalur from class 3 to 12, including basic computer training. Learn comfortably from home with online sessions.</p>
+  </section>
+
+  <section class="form-section">
+    <h2>Add Student Details</h2>
+    <form id="studentForm" onsubmit="event.preventDefault(); submitStudentForm();">
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" required>
+
+      <label for="studentGrade">Class/Grade:</label>
+      <select id="studentGrade" required>
+        <option value="">Select Grade</option>
+        <option value="3">3rd</option>
+        <option value="4">4th</option>
+        <option value="5">5th</option>
+        <option value="6">6th</option>
+        <option value="7">7th</option>
+        <option value="8">8th</option>
+        <option value="9">9th</option>
+        <option value="10">10th</option>
+        <option value="11">11th</option>
+        <option value="12">12th</option>
+      </select>
+
+      <label for="studentFees">Fees Paid:</label>
+      <input type="number" id="studentFees" required>
+
+      <button type="submit" class="button">Add Student</button>
+    </form>
   </section>
 
   <section class="contact">
@@ -105,3 +153,4 @@
   </section>
 </body>
 </html>
+
