@@ -4,148 +4,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Tuition Hub - Vadalur</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <style>
     :root {
-      --color-accent: #00b894;
-      --color-bg: #f0fdfa;
-      --color-card: #ffffff;
-      --color-shadow: rgba(0, 0, 0, 0.1);
-      --color-text: #00332e;
-      --color-text-light: #ffffff;
+      --bg-light: #f0fdf9;
+      --text-dark: #00332e;
+      --accent: #009f6b;
+      --shadow: rgba(0, 0, 0, 0.05);
     }
-
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: var(--bg-light);
+      color: var(--text-dark);
     }
-
     header {
       background: white;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 10px var(--color-shadow);
+      box-shadow: 0 2px 10px var(--shadow);
     }
     header img {
       max-height: 80px;
     }
-
     h1, h2 {
-      margin-bottom: 0.5rem;
+      margin: 0.5rem 0;
     }
-
-    section {
-      padding: 1.5rem;
+    .container {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
     }
-
-    .card {
-      background: var(--color-card);
-      padding: 1rem;
-      margin: 1rem auto;
-      max-width: 600px;
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .course-card {
+      background: white;
       border-radius: 10px;
-      box-shadow: 0 2px 10px var(--color-shadow);
+      padding: 1rem;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.2s;
+      cursor: pointer;
     }
-
-    .form-section form input, .form-section form select {
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+    .about, .contact, .portal, .form-section {
+      background: white;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    label, input, select {
+      display: block;
+      margin-top: 0.5rem;
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
     }
-
-    .form-section form button {
-      background: var(--color-accent);
+    .button {
+      background: var(--accent);
       color: white;
-      padding: 10px 15px;
+      padding: 10px;
+      margin-top: 1rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 10px;
     }
-
-    .form-section form button:hover {
-      background: #009f6b;
-    }
-
-    .qr-container {
-      margin-top: 10px;
+    .qr-code {
       display: none;
+      margin-top: 1rem;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/logo.png" alt="Logo">
+    <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/logo.png" alt="My Tuition Hub Logo">
     <h1>My Tuition Hub</h1>
     <p>Vadalur Based Online Tuition Classes</p>
   </header>
 
-  <section class="card">
-    <h2>Courses & Fees</h2>
-    <ul>
-      <li>3rd to 9th Std – ₹300/month</li>
-      <li>10th to 12th Std – ₹600/month (Computer Science, Biology, Maths)</li>
-      <li>Basic Computer Class – ₹400/month</li>
-    </ul>
-    <p><strong>Class Timing:</strong> 6 PM to 8 PM</p>
-  </section>
-
-  <section class="card">
-    <h2>About</h2>
-    <p>MCA graduate offering personalized tuition classes from 3rd to 12th Std and computer basics. Online & offline sessions available in Vadalur.</p>
-  </section>
-
-  <section class="card form-section">
-    <h2>Student Registration</h2>
-    <form id="studentForm">
-      <label>Name:</label>
-      <input type="text" id="studentName" required />
-
-      <label>Class:</label>
-      <select id="studentGrade" required>
-        <option value="">Select Class</option>
-        <option value="3">3rd</option>
-        <option value="4">4th</option>
-        <option value="5">5th</option>
-        <option value="6">6th</option>
-        <option value="7">7th</option>
-        <option value="8">8th</option>
-        <option value="9">9th</option>
-        <option value="10">10th</option>
-        <option value="11">11th</option>
-        <option value="12">12th</option>
-        <option value="basic">Basic Computer</option>
-      </select>
-
-      <label>Fees Paid:</label>
-      <input type="number" id="studentFees" required />
-
-      <label>Payment Status:</label>
-      <input type="radio" name="payStatus" value="Paid" required /> Paid
-      <input type="radio" name="payStatus" value="Want to Pay" required /> Want to Pay
-
-      <div class="qr-container" id="qrContainer">
-        <p>Scan QR to Pay:</p>
-        <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/qr.png" alt="QR Code" width="200" />
+  <div class="container">
+    <section class="courses" id="courses">
+      <div class="course-card" onclick="showForm('3rd-9th', 300)">
+        <h3>3rd to 9th Std</h3>
+        <p>All Subjects - ₹300/month</p>
       </div>
+      <div class="course-card" onclick="showForm('10th-12th', 600)">
+        <h3>10th to 12th Std</h3>
+        <p>Computer Science, Biology, Maths - ₹600/month</p>
+      </div>
+      <div class="course-card" onclick="showForm('Basic Computer', 400)">
+        <h3>Basic Computer Classes</h3>
+        <p>₹400/month</p>
+      </div>
+    </section>
 
-      <button type="submit">Add Student</button>
-    </form>
-  </section>
+    <section class="form-section" id="form-section">
+      <h2>Enroll Now</h2>
+      <form id="studentForm" onsubmit="submitStudent(event)">
+        <label>Student Name</label>
+        <input type="text" id="studentName" required />
+        <label>Mobile Number</label>
+        <input type="tel" id="studentPhone" required />
+        <label>Course</label>
+        <input type="text" id="studentCourse" readonly />
+        <label>Fees</label>
+        <input type="number" id="studentFees" readonly />
+        <label>Payment</label>
+        <select id="paymentStatus" onchange="toggleQR()">
+          <option value="Paid">Paid</option>
+          <option value="Want to Pay">Want to Pay</option>
+        </select>
+        <div class="qr-code" id="qrCode">
+          <p>Scan to Pay</p>
+          <img src="https://raw.githubusercontent.com/saran832/mytuitionhub/main/qrcode.png" alt="QR Code" width="150" />
+        </div>
+        <button class="button" type="submit">Submit</button>
+      </form>
+    </section>
 
-  <section class="card">
-    <h2>Contact</h2>
-    <p>📱 <a href="https://wa.me/919444852472">WhatsApp: 94448 52472</a></p>
-    <p>📧 Email: mytuitionhub@gmail.com</p>
-  </section>
+    <section class="about">
+      <h2>About Us</h2>
+      <p>I'm an MCA graduate offering personalized tuition in Vadalur from Class 3 to 12 and Computer Basics. Learn from home via online sessions with attention and care.</p>
+    </section>
+
+    <section class="contact">
+      <h2>Contact</h2>
+      <p>📱 <a href="https://wa.me/919444852472">WhatsApp: 94448 52472</a></p>
+      <p>📧 Email: mytuitionhub@gmail.com</p>
+    </section>
+
+    <section class="portal">
+      <h2>Student Portal</h2>
+      <p><strong>Login for Registered Students</strong></p>
+      <form onsubmit="event.preventDefault(); alert('Login logic coming soon!')">
+        <label>Email / Phone</label>
+        <input type="text" required>
+        <label>Password / OTP</label>
+        <input type="password" required>
+        <button class="button">Login</button>
+      </form>
+    </section>
+  </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyC9tcljmr3GK3T98YUDxbVJZnaKluomXYs",
@@ -159,38 +170,36 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const form = document.getElementById('studentForm');
-    const qrContainer = document.getElementById('qrContainer');
+    window.showForm = (course, fees) => {
+      document.getElementById('studentCourse').value = course;
+      document.getElementById('studentFees').value = fees;
+      document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+    };
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    window.toggleQR = () => {
+      const status = document.getElementById('paymentStatus').value;
+      const qr = document.getElementById('qrCode');
+      qr.style.display = status === 'Want to Pay' ? 'block' : 'none';
+    };
 
+    window.submitStudent = async (event) => {
+      event.preventDefault();
       const name = document.getElementById('studentName').value;
-      const grade = document.getElementById('studentGrade').value;
+      const phone = document.getElementById('studentPhone').value;
+      const course = document.getElementById('studentCourse').value;
       const fees = document.getElementById('studentFees').value;
-      const payStatus = document.querySelector('input[name="payStatus"]:checked').value;
-
-      if (payStatus === "Want to Pay") {
-        qrContainer.style.display = "block";
-      } else {
-        qrContainer.style.display = "none";
-      }
+      const status = document.getElementById('paymentStatus').value;
 
       try {
-        await addDoc(collection(db, "students"), {
-          name,
-          grade,
-          fees,
-          payStatus,
-          timestamp: new Date()
-        });
-        alert("Student added successfully!");
-        form.reset();
-        qrContainer.style.display = "none";
-      } catch (err) {
-        alert("Error: " + err);
+        await addDoc(collection(db, 'students'), { name, phone, course, fees, status });
+        alert('Student added successfully!');
+        document.getElementById('studentForm').reset();
+        document.getElementById('qrCode').style.display = 'none';
+      } catch (e) {
+        alert('Error: ' + e);
       }
-    });
+    };
   </script>
 </body>
 </html>
+
